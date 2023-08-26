@@ -1,0 +1,22 @@
+const express        = require('express')
+const prorouter      = express.Router()
+const auth           = require('../middleWare/auth')
+const proController  = require('../controller/proffesioanalController')
+const multer         = require('../config/multer')
+const upload         = multer.createMulter()
+const chatController = require('../controller/chatController')
+
+prorouter.post('/proffesionalsignUp',proController.ProffesionalSignup)
+prorouter.post('/proffesionalLogin',proController.proffesionalLogin)
+prorouter.post('/progoogleMail',proController.googleMailDetails)
+prorouter.post('/proOtp',proController.otpCheckMobile)
+prorouter.get('/checkPro',auth.verifyToken,proController.checkProffesional)
+prorouter.post('/updateProDetails',auth.verifyToken,upload.single('file'),proController.updatePro)
+prorouter.get('/getWorkShop',auth.verifyToken,proController.listWorkShop)
+prorouter.get('/getFreelancer',proController.listFreelancer)
+prorouter.get('/proMapDetails',proController.proMapDetails)
+prorouter.get('/listChat',chatController.listChat)
+prorouter.get('/loadProChat',chatController.listChatProf)
+prorouter.post('/addProMessage',chatController.addMessage)
+
+module.exports=prorouter
